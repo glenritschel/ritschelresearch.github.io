@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ritschel Research — Computational Drug Repurposing</title>
+<meta name="description" content="Ritschel Research is an independent IP development organization specializing in computational drug repurposing. 43 provisional USPTO patents across 12 therapeutic areas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1E2761;
+    --teal:   #00C9A7;
+    --ice:    #CADCFC;
+    --light:  #F0F4FF;
+    --gray:   #5A6070;
+    --dark:   #0D1117;
+    --white:  #FAFBFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,201,167,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,201,167,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,201,167,0.15);
+  }
+
+  .logo {
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .logo span {
+    color: rgba(255,255,255,0.4);
+    margin: 0 0.5rem;
+  }
+
+  nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    margin-left: 2rem;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--teal); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 5;
+    padding: 8rem 3rem 6rem;
+    max-width: 900px;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-label::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: var(--teal);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 2rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  .hero-body {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    margin-bottom: 3rem;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(0,201,167,0.15);
+    border-bottom: 1px solid rgba(0,201,167,0.15);
+  }
+
+  .stat {
+    padding: 2.5rem 3rem;
+    border-right: 1px solid rgba(0,201,167,0.15);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  /* ── SECTION ── */
+  section {
+    position: relative;
+    z-index: 5;
+    padding: 5rem 3rem;
+    border-bottom: 1px solid rgba(0,201,167,0.1);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 3rem;
+    opacity: 0.8;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+  }
+
+  /* ── COMPOUNDS ── */
+  .compounds {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(0,201,167,0.1);
+    border: 1px solid rgba(0,201,167,0.1);
+    margin-top: 3rem;
+  }
+
+  .compound {
+    background: var(--dark);
+    padding: 2.5rem;
+    transition: background 0.2s;
+  }
+
+  .compound:hover { background: rgba(0,201,167,0.04); }
+
+  .compound-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .compound-moa {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .compound-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── DISEASE GRID ── */
+  .disease-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .disease-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .disease-count {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--teal);
+    min-width: 3rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .disease-info h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+
+  .disease-info p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PIPELINE ── */
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 3rem;
+    overflow: hidden;
+    border: 1px solid rgba(0,201,167,0.1);
+  }
+
+  .pipeline-step {
+    flex: 1;
+    padding: 1.8rem 1.5rem;
+    border-right: 1px solid rgba(0,201,167,0.1);
+    position: relative;
+  }
+
+  .pipeline-step:last-child { border-right: none; }
+
+  .pipeline-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--teal);
+    opacity: 0.6;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.2em;
+  }
+
+  .pipeline-name {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .pipeline-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .contact-text {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .contact-item-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    opacity: 0.7;
+  }
+
+  .contact-item-value {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .contact-item-value a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .contact-item-value a:hover {
+    color: var(--teal);
+    border-color: var(--teal);
+  }
+
+  .cta-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2.5rem;
+    background: transparent;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+
+  .cta-button:hover {
+    background: var(--teal);
+    color: var(--dark);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 5;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── FADE IN ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero, .stats, section {
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .stats { animation-delay: 0.15s; }
+  section:nth-of-type(1) { animation-delay: 0.2s; }
+  section:nth-of-type(2) { animation-delay: 0.25s; }
+  section:nth-of-type(3) { animation-delay: 0.3s; }
+  section:nth-of-type(4) { animation-delay: 0.35s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    header { padding: 1.5rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+    nav a { margin-left: 0; margin-right: 1.5rem; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { border-right: none; border-bottom: 1px solid rgba(0,201,167,0.15); }
+    .stat:nth-child(odd) { border-right: 1px solid rgba(0,201,167,0.15); }
+    section { padding: 3rem 1.5rem; }
+    .compounds { grid-template-columns: 1fr; }
+    .disease-grid { grid-template-columns: 1fr; }
+    .pipeline { flex-direction: column; }
+    .pipeline-step { border-right: none; border-bottom: 1px solid rgba(0,201,167,0.1); }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Ritschel<span>/</span>Research</div>
+  <nav>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#signal">Signal</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Computational Drug Repurposing</div>
+  <h1>Single-cell genomics.<br><em>Novel therapeutics.</em><br>43 patented pipelines.</h1>
+  <p class="hero-body">
+    Ritschel Research applies a standardized scRNA-seq pipeline to publicly available human tissue datasets,
+    identifying novel drug-target candidate pairs at single-cell resolution across autoimmune disease,
+    neurodegeneration, oncology, and fibrosis.
+  </p>
+  <a href="#contact" class="cta-button">Discuss Licensing</a>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">43</div>
+    <div class="stat-label">Provisional USPTO<br>Patents Filed 2026</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">12</div>
+    <div class="stat-label">Therapeutic<br>Areas Covered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">20+</div>
+    <div class="stat-label">Independent Pipelines<br>for WZ-3105</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">739</div>
+    <div class="stat-label">Top Compound Score<br>FTD Pipeline (73 targets)</div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">Portfolio Coverage</div>
+  <h2>12 therapeutic areas. One reproducible pipeline.</h2>
+  <div class="disease-grid">
+    <div>
+      <div class="disease-row">
+        <div class="disease-count">18</div>
+        <div class="disease-info">
+          <h3>Autoimmune &amp; Inflammatory</h3>
+          <p>SLE · RA · IBD · MS · Sjögren's · Psoriasis · AD · CREST subtypes</p>
+        </div>
+      </div>
+      <div class="disease-row">
+        <div class="disease-count">5</div>
+        <div class="disease-info">
+          <h3>Neurodegeneration</h3>
+          <p>Alzheimer's · Parkinson's · ALS · Huntington's · FTD</p>
+        </div>
+      </div>
+      <div class="disease-row">
+        <div class="disease-count">4</div>
+        <div class="disease-info">
+          <h3>Pulmonary &amp; Fibrotic</h3>
+          <p>Scleroderma · IPF · COPD · Asthma</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="disease-row">
+        <div class="disease-count">6</div>
+        <div class="disease-info">
+          <h3>GI &amp; Metabolic</h3>
+          <p>MASH · T1D · T2D · Endometriosis · EoE · IBD</p>
+        </div>
+      </div>
+      <div class="disease-row">
+        <div class="disease-count">2</div>
+        <div class="disease-info">
+          <h3>Oncology</h3>
+          <p>Glioblastoma · Gastric Premalignant</p>
+        </div>
+      </div>
+      <div class="disease-row">
+        <div class="disease-count">8</div>
+        <div class="disease-info">
+          <h3>Additional Indications</h3>
+          <p>Long COVID · CKD · Migraine · Sarcoidosis · Inflammaging</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL -->
+<section id="signal">
+  <div class="section-label">Pan-Disease Signal</div>
+  <h2>Three compounds. Twenty-plus independent pipelines. One convergent signal.</h2>
+  <div class="compounds">
+    <div class="compound">
+      <div class="compound-name">WZ-3105</div>
+      <div class="compound-moa">SRC / ABL Inhibitor</div>
+      <div class="compound-desc">
+        Top novel candidate across 20+ independent disease pipelines spanning autoimmune,
+        fibrotic, and neurological indications. Not tuned — emergent from unrelated human
+        tissue datasets.
+      </div>
+    </div>
+    <div class="compound">
+      <div class="compound-name">CHEMBL5653589</div>
+      <div class="compound-moa">Pan-Disease Lead</div>
+      <div class="compound-desc">
+        #1 novel compound across 11 independent pipelines. Top score 739.2 in frontotemporal
+        dementia (73 targets — portfolio record). Also top in Sarcoidosis, EoE,
+        Huntington's, and ALS.
+      </div>
+    </div>
+    <div class="compound">
+      <div class="compound-name">QL-XII-47</div>
+      <div class="compound-moa">MELK / FLT3 Inhibitor</div>
+      <div class="compound-desc">
+        Top novel candidate in IBD (score 2034.6 — portfolio record), irAE (1117.7),
+        GBM, Psoriasis, and T1D. Six or more independent pipelines confirm the signal.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="section-label">Methodology</div>
+  <h2>Standardized. Reproducible. Fully archived.</h2>
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="pipeline-num">01</div>
+      <div class="pipeline-name">scRNA-seq Input</div>
+      <div class="pipeline-detail">NCBI GEO public<br>datasets</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">02</div>
+      <div class="pipeline-name">scVI Batch Correction</div>
+      <div class="pipeline-detail">GPU-accelerated<br>integration</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">03</div>
+      <div class="pipeline-name">Leiden Clustering</div>
+      <div class="pipeline-detail">Cell-type-specific<br>resolution</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">04</div>
+      <div class="pipeline-name">Wilcoxon DE</div>
+      <div class="pipeline-detail">Top DE genes<br>per cluster</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">05</div>
+      <div class="pipeline-name">ChEMBL Screen</div>
+      <div class="pipeline-detail">pChEMBL ≥7.5<br>bioactivity filter</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">06</div>
+      <div class="pipeline-name">Novelty Filter</div>
+      <div class="pipeline-detail">PubChem patent<br>classification</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">07</div>
+      <div class="pipeline-name">Ranked Output</div>
+      <div class="pipeline-detail">Scored candidates<br>+ watchlist</div>
+    </div>
+  </div>
+  <p style="margin-top:2rem; font-size:0.85rem; color:rgba(255,255,255,0.35); font-family:'DM Mono',monospace; letter-spacing:0.05em; line-height:1.8;">
+    All 43 patent specifications and companion preprints archived on Zenodo (CC BY 4.0) with permanent DOIs.
+    All GEO datasets publicly available and independently reproducible.
+    Sole inventor: Glen Charles Ritschel. Priority dates: February–April 2026.
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Licensing &amp; Partnership</div>
+  <h2>Seeking option or license agreement with buyer-funded non-provisional conversion.</h2>
+  <div class="contact-grid">
+    <div class="contact-text">
+      Full portfolio exclusivity, therapeutic-area carve-outs, and pan-disease
+      compound package structures are all available. Priority dates expire
+      February–April 2027. One coordinated diligence cycle covers all 43 patents
+      simultaneously — the Zenodo archive is your data room, available now.
+    </div>
+    <div class="contact-details">
+      <div class="contact-item">
+        <div class="contact-item-label">Inventor</div>
+        <div class="contact-item-value">Glen Charles Ritschel</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Organization</div>
+        <div class="contact-item-value">Ritschel Research, Tega Cay SC</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-value">
+          <a href="mailto:glen@ritschelresearch.com">glen@ritschelresearch.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Archive</div>
+        <div class="contact-item-value">
+          <a href="https://zenodo.org/search?q=ritschel+research" target="_blank" rel="noopener">
+            zenodo.org — search "Ritschel Research"
+          </a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Code</div>
+        <div class="contact-item-value">
+          <a href="https://github.com/glenritschel" target="_blank" rel="noopener">
+            github.com/glenritschel
+          </a>
+        </div>
+      </div>
+      <a href="mailto:glen@ritschelresearch.com?subject=Portfolio%20Licensing%20Inquiry%20%E2%80%94%20Ritschel%20Research" class="cta-button">
+        Request Portfolio Overview
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2026 Ritschel Research · Tega Cay, SC · Sole Inventor: Glen Charles Ritschel</div>
+  <div class="footer-right">43 Provisional USPTO Patents · Filed Feb–Apr 2026</div>
+</footer>
+
+</body>
+</html>
